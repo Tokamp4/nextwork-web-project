@@ -8,11 +8,17 @@ phases:
     commands:
       - echo Initializing environment
       - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain nextwork --domain-owner 404619634004 --region us-east-2 --query authorizationToken --output text`
-
   build:
     commands:
-      - echo Build started on `date`
+      - echo "====== BEGINNING TEST PHASE ======"
+      - echo "Running tests on `date`"
+      - chmod +x run-tests.sh
+      - ./run-tests.sh
+      - echo "====== TEST PHASE COMPLETE ======"
+      - echo "====== BEGINNING BUILD PHASE ======"
+      - echo "Build started on `date`"
       - mvn -s settings.xml compile
+      - echo "====== BUILD PHASE COMPLETE ======"
   post_build:
     commands:
       - echo Build completed on `date`
